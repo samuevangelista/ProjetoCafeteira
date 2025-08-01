@@ -15,8 +15,8 @@ def menu():
     print("-" * 30)
     print('1 - Pedido\n'
     '2 - Cadastro Cliente\n' 
-    '4 - Produtos\n'
-    '5 - Sair') 
+    '3 - Produtos\n'
+    '4 - Sair') 
 
 def sai(): 
     print("\nEncerrando", end="")
@@ -41,9 +41,14 @@ def mostrar_produtos():
 
     for codigo, nome, preco in produtos:
         print(codigo.ljust(10) + nome.ljust(20) + f"R$ {preco:.2f}")
+    
+    print("-" * 40)
 
 def adicionar_produto():
     codigo = input("Código: ")
+    if any(p[0] == codigo for p in produtos):
+        print("Código já existente. Tente outro.")
+        return
     nome = input("Nome do produto: ")
     preco = float(input("Preço: "))
     produtos.append([codigo, nome, preco])
@@ -93,20 +98,21 @@ def criar_pedido():
         print("Produto não encontrado.")
 
 def listar_pedidos():
-    if not pedidos:
-        print("Nenhum pedido cadastrado.")
-        return
-    print("\nPedidos:")
+    
+    print("\n--- PEDIDOS CRIADOS---")
     for p in pedidos:
         total = p["quantidade"] * p["preco"]
         print(f"ID: {p['id']} | {p['quantidade']}x {p['nome']} (Código: {p['codigo']}) - Total: R${total}")
+    if not pedidos:
+        print("Nenhum pedido cadastrado.")
+        return
 
 def excluir_pedido():
     try:
-        id_pedido = int(input("Digite o ID do pedido a excluir: "))
+        id_pedido = int(input("\nDigite o ID do pedido a excluir: "))
         global pedidos
         pedidos = [p for p in pedidos if p["id"] != id_pedido]
-        print("Pedido excluído com sucesso!")
+        print("\nPedido excluído com sucesso!")
     except ValueError:
         print("ID inválido.")
 
@@ -135,8 +141,9 @@ while True:
     escolha = int(input('Qual a escolha?: '))
     
     if escolha == 1:
+        limpa_tela()
         while True:
-            print("\n--- PEDIDOS ---")
+            print("\n--- MENU PEDIDOS ---\n")
             print("1. Criar pedido")
             print("2. Listar pedidos")
             print("3. Excluir pedido")
@@ -145,10 +152,14 @@ while True:
             opcao = input("Escolha uma opção: ").strip()
 
             if opcao == "1":
+                limpa_tela()
                 criar_pedido()
             elif opcao == "2":
+                limpa_tela()
                 listar_pedidos()
             elif opcao == "3":
+                limpa_tela()
+                listar_pedidos()
                 excluir_pedido()
             elif opcao == "4":
                 print("\nVoltando", end="")
@@ -159,7 +170,7 @@ while True:
             else:
                 print("Opção inválida.")
 
-    elif escolha == 4:
+    elif escolha == 3:
         limpa_tela()
         while True:
             print("\n--- PRODUTOS ---")
@@ -187,5 +198,5 @@ while True:
                 break
             else:
                 print("Opção inválida. Tente novamente.")
-    elif escolha == 5:
+    elif escolha == 4:
         sai()
