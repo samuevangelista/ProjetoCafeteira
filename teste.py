@@ -309,3 +309,7 @@ while True:
 
     elif escolha == 4:
         sai()
+        
+    else:
+        print("Opção inválida.")
+        time.sleep(2)
