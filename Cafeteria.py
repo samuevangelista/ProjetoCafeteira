@@ -15,7 +15,7 @@ def logo(): # Função para mostrar logo
 def menu(): # Função para mostrar menu
     print("-" * 30)
     print('1 - Pedido\n'
-          '2 - Cadastro Cliente\n'
+          '2 - Cliente\n'
           '3 - Produtos\n'
           '4 - Sair')
 
